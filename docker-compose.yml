@@ -1,0 +1,36 @@
+services:
+
+  playground:
+    build: ./OBJECT_DETECTION
+    image: object_detection:latest
+    container_name: object_detection
+    volumes:
+      - ./OBJECT_DETECTION/OBJECT_DETECTION:/home/OBJECT_DETECTION
+    environment:
+      - DISPLAY=host.docker.internal:0.0
+    ports:
+      - "10000:10000"
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+
+# README
+
+## Run this commands in the bash terminal the first time
+### source /opt/ros/humble/setup.bash
+### colcon build --symlink-install
+
+## Run this command in the bash terminal
+### source /opt/ros/humble/setup.bash && source install/setup.bash && ros2 run object_detection detections
+
+
+### Additional ROS commands
+# source /opt/ros/humble/setup.bash
+# colcon build --symlink-install
+# colcon build --symlink-install --packages-select interfaces
+# source /opt/ros/humble/setup.bash && source install/setup.bash && ros2 run unity_tcp_endpoint unity_tcp_endpoint
+# source /opt/ros/humble/setup.bash && source install/setup.bash && ros2 run object_detection detections
